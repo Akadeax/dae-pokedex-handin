@@ -6,15 +6,16 @@
 #include "simdjson.h"
 using namespace simdjson;
 
-JSONParserSimd::JSONParserSimd()
-	: JSONParser()
-{
-		std::cout << "Created Simd parser\n";
+#include "Documents/JSONDocumentSimd.hpp"
 
-	// ondemand::parser parser;
-	// std::string json{ "{ \"test\": 123 }" };
-	// ondemand::document decoded = parser.iterate(json);
-	// std::cout << decoded["test"] << std::endl;
+JSONParserSimd::JSONParserSimd()
+{
+	std::cout << "== Initialized Simdjson parser ==\n";
+}
+
+std::unique_ptr<JSONDocument> JSONParserSimd::Parse(const std::string& jsonString)
+{
+    return std::make_unique<JSONDocumentSimd>(m_Parser.parse(jsonString));
 }
 
 #endif

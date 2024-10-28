@@ -1,18 +1,23 @@
-cmake_minimum_required(VERSION 3.29)
+cmake_minimum_required(VERSION 3.28)
 project(DAEPokedex)
 
 set (CMAKE_CXX_STANDARD 20)
 
 include(FetchContent)
 
-set(JSON_PARSER "nlohmann" CACHE STRING "The JSON parser to use in C++ code")
-set_property(CACHE JSON_PARSER PROPERTY STRINGS "nlohmann" "simdjson")
-
+set(JSON_PARSER "simdjson" CACHE STRING "The JSON parser to use in C++ code")
+set_property(CACHE JSON_PARSER PROPERTY STRINGS "simdjson" "nlohmann")
 
 add_subdirectory(src)
 
 include("vendor/${JSON_PARSER}.cmake")
 fetch_and_link(${PROJECT_NAME})
+
+target_include_directories(
+	${PROJECT_NAME}
+	PRIVATE ${CMAKE_SOURCE_DIR}
+	PRIVATE ${CMAKE_SOURCE_DIR}/src
+)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/$<CONFIG>")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/$<CONFIG>")

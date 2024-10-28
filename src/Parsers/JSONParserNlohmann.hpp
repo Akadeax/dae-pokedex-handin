@@ -9,6 +9,8 @@ class JSONParserNlohmann : public JSONParser
 {
 public:
 	JSONParserNlohmann();
+
+	std::unique_ptr<JSONDocument> Parse(const std::string& jsonString);
 };
 
 #endif
